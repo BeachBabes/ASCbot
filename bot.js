@@ -1,7 +1,7 @@
 const discord = require('discord.js')
 const { Client } = require('discord.js');
 const client = new Client({disableEveryone: true})
-const PREFIX = ("m.")
+const PREFIX = ("marcel")
 const GOOGLE_API_KEY = ('AIzaSyCIRU11Ooxr7JYGc35F9d-VqBp190xBfzc')
 const YouTube = require('simple-youtube-api');
 const ytdl = require('ytdl-core');
