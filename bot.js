@@ -297,7 +297,7 @@ client.on('message', async msg => {
                 if(!args[0])
                 return msg.channel.send(noarg)
             }
-            let message = await client.channels.get("578666069498265623").send(poll)
+            let message = await client.channels.get("559509706088120320").send(poll)
             await message.react('✅')
             msg.delete({timeout: 1000})
         }
