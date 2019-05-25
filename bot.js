@@ -2,7 +2,13 @@ const discord = require('discord.js')
 const { Client } = require('discord.js');
 const client = new Client({disableEveryone: true})
 const PREFIX = ("m.")
+const GOOGLE_API_KEY = ('AIzaSyCIRU11Ooxr7JYGc35F9d-VqBp190xBfzc')
+const YouTube = require('simple-youtube-api');
+const ytdl = require('ytdl-core');
+const Console = console;
 const fs = require('fs')
+const youtube = new YouTube(GOOGLE_API_KEY);
+const queue = new Map();
 let options = {
     total: "565272404360822794",
     users: "565272460891783168",
@@ -121,6 +127,9 @@ client.on('message', async msg => {
         });
     }
     if (!msg.content.startsWith(PREFIX)) return undefined;
+	const searchString = args.slice(1).join(' ');
+	const url = args[1] ? args[1].replace(/<(.+)>/g, '$1') : '';
+	const serverQueue = queue.get(msg.guild.id);
     const args = msg.content.split(' ');
     if(command === 'rules')
     {
@@ -681,7 +690,7 @@ client.on('message', async msg => {
     if(command === 'copypasta')
     {
         msg.delete()
-        var copy = Math.floor(Math.random() * 2)
+        var copy = Math.floor(Math.random() * 3)
     if(copy === 0)
     {
     var copyPaste = new discord.RichEmbed()
@@ -716,6 +725,10 @@ hhhh                                  hhhhh
 hhhh                                  hhhhh 
 hhhh                                  hhhhh`)
     }
+	    if(copy === 2)
+	    {
+		    msg.channel.send(`动态网自由门 天安門 天安门 法輪功 李洪志 Free Tibet 六四天安門事件 The Tiananmen Square protests of 1989 天安門大屠殺 The Tiananmen Square Massacre 反右派鬥爭 The Anti-Rightist Struggle 大躍進政策 The Great Leap Forward 文化大革命 The Great Proletarian Cultural Revolution 人權 Human Rights 民運 Democratization 自由 Freedom 獨立 Independence 多黨制 Multi-party system 台灣 臺灣 Taiwan Formosa 中華民國 Republic of China 西藏 土伯特 唐古特 Tibet 達賴喇嘛 Dalai Lama 法輪功 Falun Dafa 新疆維吾爾自治區 The Xinjiang Uyghur Autonomous Region 諾貝爾和平獎 Nobel Peace Prize 劉暁波 Liu Xiaobo 民主 言論 思想 反共 反革命 抗議 運動 騷亂 暴亂 騷擾 擾亂 抗暴 平反 維權 示威游行 李洪志 法輪大法 大法弟子 強制斷種 強制堕胎 民族淨化 人體實驗 肅清 胡耀邦 趙紫陽 魏京生 王丹 還政於民 和平演變 激流中國 北京之春 大紀元時報 九評論共産黨 獨裁 專制 壓制 統一 監視 鎮壓 迫害 侵略 掠奪 破壞 拷問 屠殺 活摘器官 誘拐 買賣人口 遊進 走私 毒品 賣淫 春畫 賭博 六合彩 天安門 天安门 法輪功 李洪志 Winnie the Pooh 劉曉波动态网自由门`)
+	    }
     }
     if(command === 'time')
     {
@@ -733,5 +746,197 @@ hhhh                                  hhhhh`)
         .addField('Invite link to Alfreds Summer Camp', 'https://discord.gg/xmNsgPb')
         msg.channel.send(link)
     }
+	if (command === 'play') {
+		const voiceChannel = msg.member.voiceChannel;
+		if (!voiceChannel) return msg.channel.send('I\'m sorry but you need to be in a voice channel to play music!')
+		msg.delete()
+		.then(msg => msg.delete(10000))
+		const permissions = voiceChannel.permissionsFor(msg.client.user);
+		if (!permissions.has('CONNECT')) {
+			return msg.channel.send('I cannot connect to your voice channel, make sure I have the proper permissions!')
+			.then(msg => msg.delete(10000))
+		}
+		if (!permissions.has('SPEAK')) {
+			return msg.channel.send('I cannot speak in this voice channel, make sure I have the proper permissions!')
+			.then(msg => msg.delete(10000))
+		}
+
+		if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
+			const playlist = await youtube.getPlaylist(url);
+			const videos = await playlist.getVideos();
+			for (const video of Object.values(videos)) {
+				const video2 = await youtube.getVideoByID(video.id); 
+				await handleVideo(video2, msg, voiceChannel, true); 
+			}
+			return msg.channel.send(`Success! Playlist: **${playlist.title}** has been added to the queue!`)
+			.then(msg => msg.delete(10000))
+		} else {
+			try {
+				var video = await youtube.getVideo(url);
+			} catch (error) {
+				try {
+					var videos = await youtube.searchVideos(searchString, 10);
+					let index = 0;
+					msg.channel.send(`
+__**Song selection:**__
+
+${videos.map(video2 => `**${++index} -** ${video2.title}`).join('\n')}
+
+Type a number 1-10 to select a song!
+					`)
+					.then(msg => msg.delete(15000))
+					try {
+						var response = await msg.channel.awaitMessages(msg2 => msg2.content > 0 && msg2.content < 11, {
+							maxMatches: 1,
+							time: 10000,
+							errors: ['time']
+						})
+					} catch (err) {
+						console.error(err);
+						return msg.channel.send('You didnt enter a number in time!')
+						.then(msg => msg.delete(10000))
+					}
+					const videoIndex = parseInt(response.first().content)
+					var video = await youtube.getVideoByID(videos[videoIndex - 1].id);
+				} catch (err) {
+					console.error(err);
+					return msg.channel.send('No search results found.')
+					.then(msg => msg.delete(10000))
+				}
+			}
+			return handleVideo(video, msg, voiceChannel);
+		}
+	} else if (command === 'skip') {
+		if (!msg.member.voiceChannel) return msg.channel.send('You are not in a voice channel!')
+		msg.delete()
+		.then(msg => msg.delete(10000))
+		if (!serverQueue) return msg.channel.send('There is nothing playing!')
+		msg.delete()
+		.then(msg => msg.delete(10000))
+		serverQueue.connection.dispatcher.end('Skip command has been used!');
+		return undefined;
+	} else if (command === 'stop') {
+		if (!msg.member.voiceChannel) return msg.channel.send('You are not in a voice channel!')
+		msg.delete()
+		.then(msg => msg.delete(10000))
+		if (!serverQueue) return msg.channel.send('Theres nothing playing idot')
+		msg.delete()
+		.then(msg => msg.delete(10000))
+		serverQueue.songs = [];
+		serverQueue.connection.dispatcher.end('Stop command has been used!');
+		return undefined;
+	} else if (command === 'volume') {
+		if (!msg.member.voiceChannel) return msg.channel.send('You are not in a voice channel!');
+		msg.delete()
+		if (!serverQueue) return msg.channel.send('There is nothing playing.');
+		msg.delete()
+		if (!args[1]) return msg.channel.send(`The current volume is: **${serverQueue.volume}**`);
+		msg.delete()
+		serverQueue.volume = args[1];
+		serverQueue.connection.dispatcher.setVolumeLogarithmic(args[1] / 5);
+		return msg.channel.send(`I set the volume to: **${args[1]}**`)
+		.then(msg => msg.delete(10000))
+	} else if (command === 'np') {
+		if (!serverQueue) return msg.channel.send('There is nothing playing!');
+		return msg.channel.send(`Now playing: **${serverQueue.songs[0].title}**`)		
+		.then(msg => msg.delete(10000))
+	} else if (command === 'queue') {
+		if (!serverQueue) return msg.channel.send('There is nothing playing!')
+		.then(msg => msg.delete(10000))
+		return msg.channel.send(`
+__**Song queue:**__
+
+${serverQueue.songs.map(song => `**>** ${song.title}`).join('\n')}
+
+**Now playing:** ${serverQueue.songs[0].title}
+		`)
+		.then(msg => msg.delete(10000))
+	} else if (command === 'pause') {
+		if (serverQueue && serverQueue.playing) {
+			serverQueue.playing = false;
+			serverQueue.connection.dispatcher.pause();
+			return msg.channel.send(':pause_button: Music paused!')
+			.then(msg => msg.delete(10000))
+		}
+		return msg.channel.send('There is nothing playing.')
+		.then(msg => msg.delete(10000))
+	} else if (command === 'resume') {
+		if (serverQueue && !serverQueue.playing) {
+			serverQueue.playing = true;
+			serverQueue.connection.dispatcher.resume();
+			return msg.channel.send(':play_button: Music unpaused!')
+			.then(msg => msg.delete(10000))
+		}
+		return msg.channel.send('There is nothing playing.')
+		.then(msg => msg.delete(10000))
+	}
+
+	return undefined;
+});
+
+async function handleVideo(video, msg, voiceChannel, playlist = false) {
+	const serverQueue = queue.get(msg.guild.id);
+	console.log(video);
+	const song = {
+		id: video.id,
+		title: Util.escapeMarkdown(video.title),
+		url: `https://www.youtube.com/watch?v=${video.id}`
+	};
+	if (!serverQueue) {
+		const queueConstruct = {
+			textChannel: msg.channel,
+			voiceChannel: voiceChannel,
+			connection: null,
+			songs: [],
+			volume: 5,
+			playing: true
+		};
+		queue.set(msg.guild.id, queueConstruct);
+
+		queueConstruct.songs.push(song);
+
+		try {
+			var connection = await voiceChannel.join();
+			queueConstruct.connection = connection;
+			play(msg.guild, queueConstruct.songs[0]);
+		} catch (error) {
+			console.error(`I could not join the voice channel: ${error}`);
+			queue.delete(msg.guild.id);
+			return msg.channel.send(`Sorry, I can't join the channel!`)
+			.then(msg => msg.delete(10000))
+		}
+	} else {
+		serverQueue.songs.push(song);
+		console.log(serverQueue.songs);
+		if (playlist) return undefined;
+		else return msg.channel.send(`${song.title} has been added to your queue!`)
+		.then(msg => msg.delete(10000))
+	}
+	return undefined;
+}
+
+function play(guild, song) {
+	const serverQueue = queue.get(guild.id);
+
+	if (!song) {
+		serverQueue.voiceChannel.leave();
+		queue.delete(guild.id);
+		return;
+	}
+	console.log(serverQueue.songs);
+
+	const dispatcher = serverQueue.connection.playStream(ytdl(song.url))
+		.on('end', reason => {
+			if (reason === 'Stream is not generating quickly enough.') console.log('Song ended.');
+			else console.log(reason);
+			serverQueue.songs.shift();
+			play(guild, serverQueue.songs[0]);
+		})
+		.on('error', error => console.error(error));
+	dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+
+	serverQueue.textChannel.send(`Now playing: **${song.title}!**`)
+	.then(msg => msg.delete(10000))
+}
 })
 client.login(process.env.BOT_TOKEN)
