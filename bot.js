@@ -1,7 +1,7 @@
 const discord = require('discord.js')
 const { Client } = require('discord.js');
 const client = new Client({disableEveryone: true})
-const PREFIX = ("m.")
+const PREFIX = ("marcel")
 const fs = require('fs')
 let options = {
     total: "565272404360822794",
