@@ -42,6 +42,20 @@ client.on('guildMemberAdd', function(member)
     let memberRole = member.guild.roles.find('name', 'Day Camper')
     member.addRole(memberRole)
 })
+client.on('guildMemberRemove', (member) =>
+{
+    let lu = member
+    var leave = new discord.RichEmbed()
+    .addField('User Left', `${lu} has just left the camp`)
+    client.channels.get('580937413766021140').send(leave)
+})
+client.on('guildMemberAdd', (member) =>
+{
+    let ju = member
+    var join = new discord.RichEmbed()
+    .addField('User Joined', `${ju} has just joined the camp`)
+    client.channels.get('580937413766021140').send(join)
+})
 client.on("guildMemberAdd", (member) => {
 	//All choices are optional here. Bot wont work if the channel ID's are wrong. How to properly get ID's read in README.md 
 	try {
