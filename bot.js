@@ -1,5 +1,6 @@
 const discord = require('discord.js')
 const { Client } = require('discord.js');
+const Console = console
 const client = new Client({disableEveryone: true})
 const PREFIX = ("m.")
 const fs = require('fs')
