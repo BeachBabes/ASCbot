@@ -696,7 +696,7 @@ client.on('message', async msg => {
     if(command === 'copypasta')
     {
         msg.delete()
-        var copy = Math.floor(Math.random() * 3)
+        var copy = Math.floor(Math.random() * 4)
     if(copy === 0)
     {
     var copyPaste = new discord.RichEmbed()
