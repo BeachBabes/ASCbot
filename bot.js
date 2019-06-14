@@ -757,7 +757,7 @@ hhhh                                  hhhhh`)
     {
         msg.delete()
         var link = new discord.RichEmbed()
-        .addField('Invite link to Alfreds Summer Camp', 'https://discord.gg/xmNsgPb')
+        .addField('Invite link to Alfreds Summer Camp.', 'https://discord.gg/xmNsgPb')
         msg.channel.send(link)
     }
 })
