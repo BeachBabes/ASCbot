@@ -207,9 +207,7 @@ client.on('message', async msg => {
     {
 	msg.delete()
         const args = msg.content.split(' ')
-        var poll = new discord.RichEmbed()
-        .setDescription(args.slice(1).join(' '))
-	msg.channel.send(poll)
+	msg.channel.send(args.slice(1).join(' '))
     }
     if(command === 'setup')
     {
