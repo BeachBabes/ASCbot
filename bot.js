@@ -205,8 +205,10 @@ client.on('message', async msg => {
     }
     if(command === 'say')
     {
-        const saything = args.join(' ')
-        msg.channel.send(saything)
+        const args = msg.content.split(' ')
+        var poll = new discord.RichEmbed()
+        .setDescription(args.slice(1).join(' '))
+	msg.channel.send(poll)
     }
     if(command === 'setup')
     {
