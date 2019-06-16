@@ -2,7 +2,7 @@ const discord = require('discord.js')
 const { Client } = require('discord.js');
 const Console = console
 const client = new Client({disableEveryone: true})
-const PREFIX = ("m.")
+const PREFIX = (".")
 const fs = require('fs')
 let options = {
     total: "565272404360822794",
@@ -13,7 +13,7 @@ let options = {
 client.on('reconnecting', () => console.log('I am reconnecting now!'));
 client.on('ready', function(){
     console.log(`Bot Ready for ${client.users.size} users`);
-    client.user.setPresence({ game: { name: 'scrat', type: "streaming", url: "https://www.twitch.tv/discord.gg/FZjVDNs"}});
+    client.user.setPresence({ game: { name: 'Adolf Knitler', type: "streaming", url: "https://www.twitch.tv/discord.gg/FZjVDNs"}});
     client.user.setStatus('online')
 });
 client.on('guildMemberAdd', function(member)
@@ -521,9 +521,17 @@ client.on('message', async msg => {
     if(command === 'pp')
     {
         msg.delete()
+	    var chance = Math.floor(Math.random() * 2)
+	    if(chance === 0)
+	    {
         var pp = new discord.RichEmbed()
         .addField('Your PP is this long', `${Math.floor(Math.random() * 16)} inches`)
         msg.channel.send(pp)
+	    }
+	    if(chance === 1)
+	    {
+		    msg.channel.send('https://cdn.discordapp.com/attachments/579830664677949442/589768790477111316/image0.jpg')
+	    }
     }
     if(command === 'rps')
     {
