@@ -205,6 +205,7 @@ client.on('message', async msg => {
     }
     if(command === 'say')
     {
+	msg.delete()
         const args = msg.content.split(' ')
         var poll = new discord.RichEmbed()
         .setDescription(args.slice(1).join(' '))
