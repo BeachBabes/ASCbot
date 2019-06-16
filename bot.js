@@ -203,6 +203,11 @@ client.on('message', async msg => {
         msg.channel.send(help)
         msg.channel.send(public)
     }
+    if(command === 'say')
+    {
+        const saything = args.join(' ')
+        msg.channel.send(saything)
+    }
     if(command === 'setup')
     {
         msg.delete()
