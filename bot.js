@@ -39,7 +39,7 @@ client.on('guildMemberAdd', function(member)
     .setFooter('Bot created by Alfred')
     .setThumbnail('https://cdn.discordapp.com/attachments/559520022951755780/571798911031705600/sansberry.jpg')
     member.send(join)
-    let memberRole = member.guild.roles.find('name', 'Day Camper')
+    let memberRole = member.guild.roles.find('name', 'Novice Knitter')
     member.addRole(memberRole)
 })
 client.on('guildMemberRemove', (member) =>
