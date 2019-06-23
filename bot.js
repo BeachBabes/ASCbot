@@ -175,6 +175,7 @@ client.on('message', async msg => {
         .addField('.setup', 'Sets up the @everyone role and lockdown role. You must move the lockdown role above all roles except for admin roles for maximum protection.')
         .addField('.announce', 'Makes an announcement')
         .addField('.timer', 'Starts a week long timer to have reminders setup.')
+	.then(msg.delete(10000))
         var public = new discord.RichEmbed()
         .setTitle('Help Command Page 2')
         .addField('PUBLIC COMMANDS', 'Below are the commands for the public')
@@ -199,6 +200,7 @@ client.on('message', async msg => {
         .addField('.serverlink', 'Sends the servers permanent invite link')
         msg.channel.send(help)
         msg.channel.send(public)
+	    .then(msg.delete(10000))
     }
     if(command === 'say')
     {
