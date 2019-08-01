@@ -80,6 +80,31 @@ client.on("guildMemberRemove", (member) => {
     }})
 
 client.on('message', async msg => {
+	if(msg.content.includes('nigger'))
+    {
+        var badword = new discord.RichEmbed()
+        .addField('Message Deleted!', `${msg.author} no racial slurs!`)
+        msg.delete()
+        msg.channel.send(badword)
+        
+    }
+    if(msg.channel.id == "559508892732751872")
+        {
+            if(msg.attachments.size == 1)
+            {
+                msg.react('✅')
+                await msg.react('❌')
+            }
+            if(msg.content.includes('http'))
+            {
+                msg.react('✅')
+                await msg.react('❌')
+            }
+            else
+            {
+                return
+            }
+        } 
 	if (msg.author.bot) return undefined;
 	let command = msg.content.toLowerCase().split(' ')[0];
     command = command.slice(PREFIX.length)
