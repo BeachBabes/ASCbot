@@ -809,10 +809,11 @@ hhhh                                  hhhhh`)
             return;
         }
         let reason = args.slice(1).join(' ')
+	let role = msg.member.guild.roles.find(role => role.name === 'Executed')
         var perms2 = new discord.RichEmbed()
         .setTitle("Thou hath been strucken down!")
-        .setDescription(`***:white_check_mark: ${bannedUser} has been executed!***`)
-        msg.guild.member(bannedUser).ban(reason)
+        .setDescription(`***:white_check_mark: ${bannedUser} has been executed for ${reason}***`)
+        msg.guild.member(bannedUser).addRole(role)
             .then(msg.channel.send(perms2))
             .then(console.log)
             .catch(console.error)
