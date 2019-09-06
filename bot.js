@@ -788,5 +788,34 @@ hhhh                                  hhhhh`)
         .addField('Invite link to Knitlers Knitting School.', 'https://discord.gg/xmNsgPb')
         msg.channel.send(link)
     }
+    if(command === 'execute')
+    {
+        msg.delete()
+        let bannedUser = msg.guild.member(msg.mentions.users.first());
+        if(!bannedUser)
+        {
+            var exist = new discord.RichEmbed()
+            .setTitle("Execution Failed")
+            .setDescription("The user you told me to execute doesn't exist!")
+            msg.channel.send(exist)
+            return;
+        }
+        if(!msg.member.hasPermission("ADMINISTRATOR"))
+        {
+            var perms = new discord.RichEmbed()
+            .setTitle("No Perms!")
+            .setDescription("You cannot execute users or you tried to execute an administrator!")
+            msg.channel.send(perms)
+            return;
+        }
+        let reason = args.slice(1).join(' ')
+        var perms2 = new discord.RichEmbed()
+        .setTitle("Thou hath been strucken down!")
+        .setDescription(`***:white_check_mark: ${bannedUser} has been executed!***`)
+        msg.guild.member(bannedUser).ban(reason)
+            .then(msg.channel.send(perms2))
+            .then(console.log)
+            .catch(console.error)
+    }
 })
 client.login(process.env.BOT_TOKEN)
