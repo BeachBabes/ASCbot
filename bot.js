@@ -38,7 +38,7 @@ client.on('guildMemberAdd', function(member)
     .addField('Incase you leave and want to come back!', 'https://discord.gg/4r5NV7k')
     .setThumbnail('https://cdn.discordapp.com/attachments/559520022951755780/571798911031705600/sansberry.jpg')
     member.send(join)
-    let memberRole = member.guild.roles.find('name', 'SandCloud Virgins')
+    let memberRole = member.guild.roles.find('name', 'Bro Initiate')
     member.addRole(memberRole)
 })
 client.on('guildMemberRemove', (member) =>
