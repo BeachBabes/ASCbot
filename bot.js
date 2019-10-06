@@ -82,11 +82,7 @@ client.on("guildMemberRemove", (member) => {
 client.on('message', async msg => {
 	if(msg.content.includes('nigger'))
     {
-        var badword = new discord.RichEmbed()
-        .addField('Message Deleted!', `${msg.author} no racial slurs!`)
         msg.delete()
-        msg.channel.send(badword)
-        
     }
     if(msg.channel.id == "559508892732751872")
         {
