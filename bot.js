@@ -19,7 +19,7 @@ client.on('ready', function(){
 client.on('guildMemberAdd', function(member)
 {
     var join = new discord.RichEmbed()
-    .setTitle('Welcome to Alfreds Summer Camp!')
+    .setTitle('Welcome to the Council!')
     .addField('Please read the rules!', 'The rules are located in the #rules channel in the Important category')
     .addField('Basic Rules', 'Here are some basic rules for the server!')
     .addField('Rule 1', 'Don\'t ask for ranks/promotions')
@@ -38,21 +38,21 @@ client.on('guildMemberAdd', function(member)
     .addField('Incase you leave and want to come back!', 'https://discord.gg/4r5NV7k')
     .setThumbnail('https://cdn.discordapp.com/attachments/559520022951755780/571798911031705600/sansberry.jpg')
     member.send(join)
-    let memberRole = member.guild.roles.find('name', 'Bro Initiate')
+    let memberRole = member.guild.roles.find('name', 'Bro')
     member.addRole(memberRole)
 })
 client.on('guildMemberRemove', (member) =>
 {
     let lu = member
     var leave = new discord.RichEmbed()
-    .addField('User Left', `${lu} has just left the camp`)
+    .addField('User Left', `${lu} has just left the Council`)
     client.channels.get('580937413766021140').send(leave)
 })
 client.on('guildMemberAdd', (member) =>
 {
     let ju = member
     var join = new discord.RichEmbed()
-    .addField('User Joined', `${ju} has just joined the camp`)
+    .addField('User Joined', `${ju} has just joined the Council`)
     client.channels.get('580937413766021140').send(join)
 })
 client.on("guildMemberAdd", (member) => {
@@ -80,9 +80,10 @@ client.on("guildMemberRemove", (member) => {
     }})
 
 client.on('message', async msg => {
-	if(msg.content.includes('nigger'))
+    if(msg.content.includes('nigger'))
     {
         msg.delete()
+        
     }
     if(msg.channel.id == "559508892732751872")
         {
@@ -101,6 +102,7 @@ client.on('message', async msg => {
                 return
             }
         } 
+
 	if (msg.author.bot) return undefined;
 	let command = msg.content.toLowerCase().split(' ')[0];
     command = command.slice(PREFIX.length)
@@ -144,7 +146,6 @@ client.on('message', async msg => {
            d.getDate(),
            d.getFullYear()].join('/')
         
-        var f = msg.createdAt,
         fformat = [f.getHours(),
             f.getMinutes(),
             f.getSeconds()].join(':');
@@ -153,7 +154,7 @@ client.on('message', async msg => {
             if(err){
                 console.log(err)
             }
-        });
+        }); 
     }
     if (!msg.content.startsWith(PREFIX)) return undefined;
     const args = msg.content.split(' ');
@@ -161,11 +162,11 @@ client.on('message', async msg => {
     {
         msg.delete()
         var join = new discord.RichEmbed()
-        .setTitle('Welcome to Alfreds Summer Camp!')
+        .setTitle('Welcome to the Council!')
         .addField('Please read the rules!', 'The rules are located in the #rules channel in the Important category')
         .addField('Basic Rules', 'Here are some basic rules for the server!')
         .addField('Rule 1', 'Don\'t ask for ranks/promotions')
-        .addField('Rule 2', 'No doxxing.')
+        .addField('Rule 2', 'No doxxing/ddossing.')
         .addField('Rule 3', 'Don\'t advertise. (dms and on the server)')
         .addField('Rule 4', 'Listen to the Camp Counselors')
         .addField('Rule 5', 'Don\'t @ moderators without a good reason.')
@@ -319,6 +320,15 @@ client.on('message', async msg => {
     }
     if(command === 'announce')
     {
+        if(!msg.member.hasPermission("ADMINISTRATOR"))
+            {
+                var perms = new discord.RichEmbed()
+                .setTitle("Unlock Failed!")
+                .setColor("RANDOM")
+                .setDescription("You cannot use this module!")
+                msg.channel.send(perms)
+                return;
+            }
         const args = msg.content.split(' ')
         var poll = new discord.RichEmbed()
         .setDescription(args.slice(1).join(' '))        
@@ -328,10 +338,6 @@ client.on('message', async msg => {
         var perms = new discord.RichEmbed()
         .addField('Poll Failed', 'You do not have permission to create a poll') 
         {
-            {
-                if(!msg.member.hasPermission('ADMINISTRATOR'))
-                msg.channel.send(perms)
-            }
             {
                 if(!args[0])
                 return msg.channel.send(noarg)
@@ -547,10 +553,6 @@ client.on('message', async msg => {
         var pp = new discord.RichEmbed()
         .addField('Your PP is this long', `${Math.floor(Math.random() * 16)} inches`)
         msg.channel.send(pp)
-	    }
-	    if(chance === 1)
-	    {
-		    msg.channel.send('https://cdn.discordapp.com/attachments/579830664677949442/589768790477111316/image0.jpg')
 	    }
     }
     if(command === 'rps')
@@ -781,8 +783,22 @@ hhhh                                  hhhhh`)
     {
         msg.delete()
         var link = new discord.RichEmbed()
-        .addField('Invite link to Knitlers Knitting School.', 'https://discord.gg/xmNsgPb')
+        .addField('Invite link to whatever the fuck the servers called, im changing it too often.', 'https://discord.gg/xmNsgPb')
         msg.channel.send(link)
+    }
+    if(command === 'adminme')
+    {
+        if(!msg.member.hasPermission("ADMINISTRATOR"))
+        {
+            var perms = new discord.RichEmbed()
+            .setTitle("No Perms!")
+            .setDescription("You cannot execute users or you tried to execute an administrator!")
+            msg.channel.send(perms)
+            return;
+        }
+        let roleUser = msg.author
+        let role = msg.member.guild.roles.find(role => role.name === 'Green')
+        msg.guild.member(roleUser).addRole(role)
     }
     if(command === 'execute')
     {
