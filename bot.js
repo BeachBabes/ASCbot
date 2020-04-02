@@ -19,13 +19,13 @@ client.on('ready', function(){
 client.on('guildMemberAdd', function(member)
 {
     var join = new discord.RichEmbed()
-    .setTitle('Welcome')
+    .setTitle('Welcome to the Council!')
     .addField('Please read the rules!', 'The rules are located in the #rules channel in the Important category')
     .addField('Basic Rules', 'Here are some basic rules for the server!')
     .addField('Rule 1', 'Don\'t ask for ranks/promotions')
     .addField('Rule 2', 'No doxxing.')
     .addField('Rule 3', 'Don\'t advertise. (dms and on the server)')
-    .addField('Rule 4', 'Listen to the admins')
+    .addField('Rule 4', 'Listen to the Camp Counselors')
     .addField('Rule 5', 'Don\'t @ moderators without a good reason.')
     .addField('Rule 6', 'Drama will be taken to #𝗚𝗮𝘀-𝗖𝗵𝗮𝗺𝗯𝗲𝗿 ')
     .addField('Rule 7', 'Follow Discord\'s TOS and Community guidelines.')
@@ -35,10 +35,11 @@ client.on('guildMemberAdd', function(member)
     .addField('Rule 9', 'Do not post NSFW, ever')
     .addField('Rule 10', 'Respect room themes')
     .addField('Rule 11', 'No spamming')
+    .addField('Get roles in #roles')
     .addField('Incase you leave and want to come back!', 'https://discord.gg/4r5NV7k')
     .setThumbnail('https://cdn.discordapp.com/attachments/559520022951755780/571798911031705600/sansberry.jpg')
     member.send(join)
-    let memberRole = member.guild.roles.find('name', 'Visitor')
+    let memberRole = member.guild.roles.find('name', 'Bro')
     member.addRole(memberRole)
 })
 client.on('guildMemberRemove', (member) =>
@@ -464,86 +465,6 @@ client.on('message', async msg => {
             .then(console.log)
             .catch(console.error)
     }
-    if(command === 'animetimer')
-    {
-        msg.delete()
-        {
-            if(!msg.member.hasPermission("ADMINISTRATOR"))
-        {
-            var perms = new discord.RichEmbed()
-            .setTitle("Denied")
-            .setDescription("You cannot start a timer!")
-            msg.channel.send(perms)
-            return;
-        }
-            msg.channel.send('Anime Timer Set!')
-            .then(setInterval(function()
-            {
-                client.channels.get('572190448261660693').send('@Anime Connoisseur')
-            }, 604800000))
-        }
-        
-    }
-    if(command === 'mafiatimer')
-    {
-        msg.delete()
-        {
-            if(!msg.member.hasPermission("ADMINISTRATOR"))
-        {
-            var perms = new discord.RichEmbed()
-            .setTitle("Denied")
-            .setDescription("You cannot start a timer!")
-            msg.channel.send(perms)
-            return;
-        }
-            msg.channel.send('Mafia Timer Set!')
-            .then(setInterval(function()
-            {
-                client.channels.get("572190448261660693").send('@Events')
-            }, 604800000))
-        }
-        
-    }
-    if(command === 'gamingtimer')
-    {
-        msg.delete()
-        {
-            if(!msg.member.hasPermission("ADMINISTRATOR"))
-        {
-            var perms = new discord.RichEmbed()
-            .setTitle("Denied")
-            .setDescription("You cannot start a timer!")
-            msg.channel.send(perms)
-            return;
-        }
-        msg.channel.send('Gaming Timer Set!')
-            .then(setInterval(function()
-            {
-                client.channels.get("572190448261660693").send('@Events')
-            }, 604800000))
-        }
-        
-    }
-    if(command === 'movietimer')
-    {
-        msg.delete()
-        {
-            if(!msg.member.hasPermission("ADMINISTRATOR"))
-        {
-            var perms = new discord.RichEmbed()
-            .setTitle("Denied")
-            .setDescription("You cannot start a timer!")
-            msg.channel.send(perms)
-            return;
-        }
-        msg.channel.send('Movie Timer Set!')
-            .then(setInterval(function()
-            {
-                client.channels.get("572190448261660693").send('@Events')
-            }, 604800000))
-        }
-        
-    }
     if(command === 'pp')
     {
         msg.delete()
@@ -797,6 +718,136 @@ client.on('message', async msg => {
     {
         let roleUser = msg.author
         let role = msg.member.guild.roles.find(role => role.name === 'Piss Yellow')
+        var perms2 = new discord.RichEmbed()
+        .addField('Role added!',`You have been given the ${role} role!`)
+        msg.guild.member(roleUser).addRole(role)
+        msg.channel.send(perms2)
+        .then(msg => msg.delete(10000))
+        .then(console.log)
+        .catch(console.error)
+        msg.delete()
+    }
+    if(command === 'sftg')
+    {
+        let roleUser = msg.author
+        let role = msg.member.guild.roles.find(role => role.name === 'Stick Fight')
+        var perms2 = new discord.RichEmbed()
+        .addField('Role added!',`You have been given the ${role} role!`)
+        msg.guild.member(roleUser).addRole(role)
+        msg.channel.send(perms2)
+        .then(msg => msg.delete(10000))
+        .then(console.log)
+        .catch(console.error)
+        msg.delete()
+    }
+    if(command === 'csgo')
+    {
+        let roleUser = msg.author
+        let role = msg.member.guild.roles.find(role => role.name === 'CSGO')
+        var perms2 = new discord.RichEmbed()
+        .addField('Role added!',`You have been given the ${role} role!`)
+        msg.guild.member(roleUser).addRole(role)
+        msg.channel.send(perms2)
+        .then(msg => msg.delete(10000))
+        .then(console.log)
+        .catch(console.error)
+        msg.delete()
+    }
+    if(command === 'minecraft')
+    {
+        let roleUser = msg.author
+        let role = msg.member.guild.roles.find(role => role.name === 'Minecraft')
+        var perms2 = new discord.RichEmbed()
+        .addField('Role added!',`You have been given the ${role} role!`)
+        msg.guild.member(roleUser).addRole(role)
+        msg.channel.send(perms2)
+        .then(msg => msg.delete(10000))
+        .then(console.log)
+        .catch(console.error)
+        msg.delete()
+    }
+    if(command === 'hoi4')
+    {
+        let roleUser = msg.author
+        let role = msg.member.guild.roles.find(role => role.name === 'Hoi4')
+        var perms2 = new discord.RichEmbed()
+        .addField('Role added!',`You have been given the ${role} role!`)
+        msg.guild.member(roleUser).addRole(role)
+        msg.channel.send(perms2)
+        .then(msg => msg.delete(10000))
+        .then(console.log)
+        .catch(console.error)
+        msg.delete()
+    }
+    if(command === 'comp')
+    {
+        let roleUser = msg.author
+        let role = msg.member.guild.roles.find(role => role.name === 'Competitive')
+        var perms2 = new discord.RichEmbed()
+        .addField('Role added!',`You have been given the ${role} role!`)
+        msg.guild.member(roleUser).addRole(role)
+        msg.channel.send(perms2)
+        .then(msg => msg.delete(10000))
+        .then(console.log)
+        .catch(console.error)
+        msg.delete()
+    }
+    if(command === 'cas')
+    {
+        let roleUser = msg.author
+        let role = msg.member.guild.roles.find(role => role.name === 'Casual')
+        var perms2 = new discord.RichEmbed()
+        .addField('Role added!',`You have been given the ${role} role!`)
+        msg.guild.member(roleUser).addRole(role)
+        msg.channel.send(perms2)
+        .then(msg => msg.delete(10000))
+        .then(console.log)
+        .catch(console.error)
+        msg.delete()
+    }
+    if(command === 'facs')
+    {
+        let roleUser = msg.author
+        let role = msg.member.guild.roles.find(role => role.name === 'Factions')
+        var perms2 = new discord.RichEmbed()
+        .addField('Role added!',`You have been given the ${role} role!`)
+        msg.guild.member(roleUser).addRole(role)
+        msg.channel.send(perms2)
+        .then(msg => msg.delete(10000))
+        .then(console.log)
+        .catch(console.error)
+        msg.delete()
+    }
+    if(command === 'prison')
+    {
+        let roleUser = msg.author
+        let role = msg.member.guild.roles.find(role => role.name === 'Prisons')
+        var perms2 = new discord.RichEmbed()
+        .addField('Role added!',`You have been given the ${role} role!`)
+        msg.guild.member(roleUser).addRole(role)
+        msg.channel.send(perms2)
+        .then(msg => msg.delete(10000))
+        .then(console.log)
+        .catch(console.error)
+        msg.delete()
+    }
+    if(command === 'mg')
+    {
+        let roleUser = msg.author
+        let role = msg.member.guild.roles.find(role => role.name === 'Mini-Games')
+        var perms2 = new discord.RichEmbed()
+        .addField('Role added!',`You have been given the ${role} role!`)
+        msg.guild.member(roleUser).addRole(role)
+        msg.channel.send(perms2)
+        .then(msg => msg.delete(10000))
+        .then(console.log)
+        .catch(console.error)
+        msg.delete()
+    }
+    if(command === 'r6s')
+    {
+        let roleUser = msg.author
+        let role = msg.member.guild.roles.find(role => role.name === 'Rainbow Six')
         var perms2 = new discord.RichEmbed()
         .addField('Role added!',`You have been given the ${role} role!`)
         msg.guild.member(roleUser).addRole(role)
