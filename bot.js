@@ -857,6 +857,19 @@ client.on('message', async msg => {
         .catch(console.error)
         msg.delete()
     }
+if(command === 'ogat')
+    {
+        let roleUser = msg.author
+        let role = msg.member.guild.roles.find(role => role.name === 'OGAT')
+        var perms2 = new discord.RichEmbed()
+        .addField('Role added!',`You have been given the ${role} role!`)
+        msg.guild.member(roleUser).addRole(role)
+        msg.channel.send(perms2)
+        .then(msg => msg.delete(10000))
+        .then(console.log)
+        .catch(console.error)
+        msg.delete()
+    }
     if(command === 'roll')
     {
         var response = new discord.RichEmbed()
