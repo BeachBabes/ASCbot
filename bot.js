@@ -36,10 +36,10 @@ client.on('guildMemberAdd', function(member)
     .addField('Rule 10', 'Respect room themes')
     .addField('Rule 11', 'No spamming')
     .addField('Get roles in #roles')
-    .addField('Incase you leave and want to come back!', 'https://discord.gg/4r5NV7k')
+    .addField('Dont leave slave', 'https://discord.gg/4r5NV7k')
     .setThumbnail('https://cdn.discordapp.com/attachments/559520022951755780/571798911031705600/sansberry.jpg')
     member.send(join)
-    let memberRole = member.guild.roles.find('name', 'Bro')
+    let memberRole = member.guild.roles.find('name', 'Visitor')
     member.addRole(memberRole)
 })
 client.on('guildMemberRemove', (member) =>
@@ -861,6 +861,19 @@ if(command === 'ogat')
     {
         let roleUser = msg.author
         let role = msg.member.guild.roles.find(role => role.name === 'OGAT')
+        var perms2 = new discord.RichEmbed()
+        .addField('Role added!',`You have been given the ${role} role!`)
+        msg.guild.member(roleUser).addRole(role)
+        msg.channel.send(perms2)
+        .then(msg => msg.delete(10000))
+        .then(console.log)
+        .catch(console.error)
+        msg.delete()
+    }
+	if(command === 'ssbu')
+    {
+        let roleUser = msg.author
+        let role = msg.member.guild.roles.find(role => role.name === 'SSBU')
         var perms2 = new discord.RichEmbed()
         .addField('Role added!',`You have been given the ${role} role!`)
         msg.guild.member(roleUser).addRole(role)
