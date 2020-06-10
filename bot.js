@@ -13,7 +13,7 @@ let options = {
 client.on('reconnecting', () => console.log('I am reconnecting now!'));
 client.on('ready', function(){
     console.log(`Bot Ready for ${client.users.size} users`);
-    client.user.setPresence({ game: { name: 'Bob Ross', type: "streaming", url: "https://www.twitch.tv/bobross"}});
+    client.user.setPresence({ game: { name: 'Big Don', type: "streaming", url: "https://www.twitch.tv/bobross"}});
     client.user.setStatus('online')
 });
 client.on('guildMemberAdd', function(member)
