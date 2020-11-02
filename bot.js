@@ -18,11 +18,6 @@ client.on('ready', function(){
 });
 client.on('guildMemberAdd', function(member)
 {
-    var join = new discord.RichEmbed()
-    .addField('fuck you retard lol')
-    .addField('Dont leave slave', 'https://discord.gg/4r5NV7k')
-    .setThumbnail('https://cdn.discordapp.com/attachments/559520022951755780/571798911031705600/sansberry.jpg')
-    member.send(join)
     let memberRole = member.guild.roles.find('name', 'Spooky')
     member.addRole(memberRole)
 })
