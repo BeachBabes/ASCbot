@@ -298,6 +298,35 @@ client.on('message', async msg => {
             msg.delete({timeout: 1000})
         }
     }
+	if(command === 'lolban')
+	{
+		msg.delete()
+        let bannedUser = msg.guild.member(msg.mentions.users.first());
+        if(!bannedUser)
+        {
+            var exist = new discord.RichEmbed()
+            .setTitle("Ban Failed!")
+            .setDescription("The user you told me to ban doesn't exist!")
+            msg.channel.send(exist)
+            return;
+        }
+        if(!msg.member.hasPermission("ADMINISTRATOR"))
+        {
+            var perms = new discord.RichEmbed()
+            .setTitle("Ban Failed!")
+            .setDescription("You cannot ban users or you tried to ban an administrator!")
+            msg.channel.send(perms)
+            return;
+        }
+        let reason = args.slice(1).join(' ')
+        var perms2 = new discord.RichEmbed()
+        .setTitle("Successfully Banned!")
+        .setDescription("***:white_check_mark: User has been banned!***")
+        msg.guild.member(bannedUser).ban(reason)
+            .then(msg.channel.send(perms2))
+            .then(console.log)
+            .catch(console.error)
+	}
     if(command === 'announce')
     {
         if(!msg.member.hasPermission("ADMINISTRATOR"))
