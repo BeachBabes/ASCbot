@@ -310,14 +310,6 @@ client.on('message', async msg => {
             msg.channel.send(exist)
             return;
         }
-        if(!msg.member.hasPermission("ADMINISTRATOR"))
-        {
-            var perms = new discord.RichEmbed()
-            .setTitle("Ban Failed!")
-            .setDescription("You cannot ban users or you tried to ban an administrator!")
-            msg.channel.send(perms)
-            return;
-        }
         let reason = args.slice(1).join(' ')
         var perms2 = new discord.RichEmbed()
         .setTitle("Successfully Banned!")
