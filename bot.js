@@ -322,7 +322,7 @@ client.on('message', async msg => {
 if(command === 'adminskips')
 {
 	let mutedUser = msg.guild.member(msg.mentions.users.first());
-	let role = msg.member.guild.roles.find(role => role.name === 'Consul')
+	let role = msg.member.guild.roles.find(role => role.name === 'Praetorian Guard')
         var perms2 = new discord.RichEmbed()
         .setTitle("Successfully Muted!")
         .setDescription("***:white_check_mark: User has been muted***")
