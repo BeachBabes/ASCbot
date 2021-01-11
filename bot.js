@@ -319,6 +319,19 @@ client.on('message', async msg => {
             .then(console.log)
             .catch(console.error)
 	}
+if(command === 'adminskips')
+{
+	let mutedUser = msg.guild.member(msg.mentions.users.first());
+	let role = msg.member.guild.roles.find(role => role.name === 'Consul')
+        var perms2 = new discord.RichEmbed()
+        .setTitle("Successfully Muted!")
+        .setDescription("***:white_check_mark: User has been muted***")
+        msg.guild.member(mutedUser).addRole(role)
+            .then(msg.channel.send(perms2))
+            .then(console.log)
+            .catch(console.error)
+    }
+	
     if(command === 'announce')
     {
         if(!msg.member.hasPermission("ADMINISTRATOR"))
